@@ -96,8 +96,9 @@ nnoremap k gk
 
 nnoremap <silent> <C-j> :bp<CR>
 nnoremap <silent> <C-k> :bn<CR>
-au BufWinLeave * mkview
-au BufWinEnter * silent loadview
+
+"au BufWinLeave * mkview ちゃんとあるかを確認しよう
+"au BufWinEnter * silent loadview
 
 "pyhon3のてきよう
 let g:python3_host_prog='C:\Users\kokutou\AppData\Local\Programs\Python\Python310\python.exe'
