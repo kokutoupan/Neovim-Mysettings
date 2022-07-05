@@ -1,0 +1,65 @@
+[[plugins]]#denoよう
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]#tomlの色付け
+repo = 'cespare/vim-toml'
+
+[[plugins]]#やんくの色付け
+repo = 'machakann/vim-highlightedyank'
+hook_add = '''
+  let g:highlightedyank_highlight_duration = 150
+'''
+[[plugins]]#ターミナル
+repo = 'kassio/neoterm'
+hook_add = '''
+  let g:neoterm_autoinsert = 1
+  let g:neoterm_autoscroll = 1
+  nnoremap <leader>tl :<c-u>exec v:count.'Tclear'<cr>
+'''
+[[plugins]]#*で検索
+repo = 'thinca/vim-visualstar'
+[[plugins]]#カッコの補完
+repo = 'higashi000/dps-kakkonan'
+
+[[plugins]]#ファイラー
+repo = 'lambdalisue/fern.vim'
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline_theme = 'deus'
+let g:airline#extensions#tabline#buffer_idx_format = {
+	\ '0': '0 ',
+	\ '1': '1 ',
+	\ '2': '2 ',
+	\ '3': '3 ',
+	\ '4': '4 ',
+	\ '5': '5 ',
+	\ '6': '6 ',
+	\ '7': '7 ',
+	\ '8': '8 ',
+	\ '9': '9 '
+	\}
+'''
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+#ddcとかのやつ==============
+[[plugins]]
+repo = 'Shougo/ddc-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+
