@@ -1,4 +1,9 @@
-lua require('init')
+lua require('init') "テスト
+
+"環境変数============================================
+let g:python3_host_prog='/usr/bin/python3'
+
+"普通の設定==========================================
 
 ""set nu
 set mouse=a
@@ -98,8 +103,6 @@ nnoremap k gk
 nnoremap <silent> <C-j> :bp<CR>
 nnoremap <silent> <C-k> :bn<CR>
 
-let g:python3_host_prog='/usr/bin/python3'
-
 "deinの設定
 "ここからした
 "deinの設定===========================================================
@@ -144,21 +147,22 @@ endif
 nnoremap <leader>e <cmd>Fern . -reveal=% -drawer<cr>
 nmap <C-p> <Plug>AirlineSelectPrevTab
 nmap <C-n> <Plug>AirlineSelectNextTab
-"ddc ----------
+
+"ddc==========================================================
 
 " Customize global settings
 " Use around source.
 " https://github.com/Shougo/ddc-around
 
-"ddcおわり
+"ddcおわり======================================================
+
 
 filetype plugin indent on
 syntax enable
 
-
-"背景の透過
 colorscheme iceberg    "example
 
+"背景の透過
 highlight Normal ctermbg=NONE guibg=NONE
 highlight NonText ctermbg=NONE guibg=NONE
 highlight LineNr ctermbg=NONE guibg=NONE
