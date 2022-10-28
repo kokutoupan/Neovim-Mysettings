@@ -1,0 +1,178 @@
+# 特定のファイルタイプで読み込む
+[[plugins]]
+repo  = 'Quramy/tsuquyomi'
+on_ft = ['typescript']
+
+# 特定のコマンドを打ったら読み込む
+[[plugins]]
+repo      = 'thinca/vim-prettyprint'
+on_cmd    = ['PP', 'PrettyPrint']
+
+# 特定のマッピングを使ったら読み込む
+# 又、gvim でしか利用しない
+[[plugins]]
+repo   = 'thinca/vim-fontzoom'
+on_cmd = ['Fontzoom']
+on_map = ['<Plug>(fontzoom-']
+gui    = 1
+
+ [[plugins]]
+ repo = 'Shougo/ddc.vim'
+ on_event = 'InsertEnter' #INSERTモードに入るとプラグインが読み込まれる。
+ hook_source = '''
+ inoremap <silent><expr> <TAB>
+ \ pumvisible() ? '<C-n>' :
+ \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+ \ '<TAB>' : ddc#map#manual_complete()
+
+ inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+ call ddc#custom#patch_global('sources', ['nvim-lsp','vsnip','around', 'file'])
+ call ddc#custom#patch_global('sourceOptions', {
+	\ 'nvim-lsp': {
+	\ 'mark': 'lsp',
+	\ 'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+	\ 'minAutoCompleteLength':1},
+	\ 'around': {'mark': 'A'},
+	\ 'file': {
+	\ 'mark': 'F',
+	\ 'isVolatile': v:true,
+	\ 'forceCompletionPattern': '\S/\S*'},
+	\'_': {
+	\   'matchers': ['matcher_head'],
+	\   'sorters': ['sorter_rank']},
+ 	\ })
+ call ddc#custom#patch_global('sourceParams', {
+      \ 'around': {'maxSize': 500},
+      \ 'file': {'smartCase': v:true},
+			\ 'nvim-lsp': { 'kindlabels': { 'Class': 'c'}},
+      \ })
+
+ call ddc#custom#patch_filetype(
+    \ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {
+    \ 'sourceOptions': {
+    \   'file': {
+    \     'forceCompletionPattern': '\S\\\S*',
+    \   },
+    \ },
+    \ 'sourceParams': {
+    \   'file': {
+    \     'mode': 'win32',
+    \   },
+    \ }})
+
+ call ddc#custom#patch_filetype('markdown', 'sourceParams', {
+		 \ 'around': {'maxSize': 100},
+		 \ })	
+
+ call ddc#enable()
+'''
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+
+[[plugins]]
+ repo = 'Shougo/ddc-around'
+ on_source = 'ddc.vim'
+
+[[plugins]]
+ repo = 'Shougo/ddc-matcher_head'
+ on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-file' #ファイルのPATHを補完するソースだが開発途中らしく動作精度はまちまち。
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+on_source = 'ddc.vim'
+
+[[plugins]]
+ repo = 'hrsh7th/vim-vsnip-integ'
+ on_source = 'ddc.vim'
+
+[[plugins]]
+ repo = 'hrsh7th/vim-vsnip'
+ on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+on_event = 'BufEnter'
+hook_source = '''
+lua<<EOF
+ local lsp_installer = require("nvim-lsp-installer")
+
+  lsp_installer.settings {
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+        }	
+    }
+ }
+
+ local on_attach = function (client, bufnr)
+ local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+ local opts = { noremap=true, silent=true }
+  buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+  buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+ buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
+  buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+  buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+  buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+end
+
+	lsp_installer.on_server_ready(function(server)
+    local opts = {}
+    opts.on_attach = on_attach
+
+    server:setup{opts}
+		local lsp_installer_servers = require'nvim-lsp-installer.servers'
+
+
+		vim.cmd [[ do User LspAttachBuffers ]]
+	end)
+EOF
+'''
+
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer' #vim-lspにおけるvim-lsp-settingsのようなプラグイン。
+on_source = 'nvim-lspconfig'
+
+[[plugins]]
+ repo = 'matsui54/ddc-nvim-lsp-doc' #補完候補の詳細情報をfloating windowで表示するプラグイン。
+ on_source = 'ddc.vim'
+ hook_source = '''
+ let g:ddc_nvim_lsp_doc_config = {
+      \ 'documentation': {
+      \   'enable': v:true,
+      \   'border': 'single',
+      \   'maxWidth': 60,
+      \   'maxHeight': 30,
+      \ },
+      \ 'signature': {
+      \   'maxHeight': 5,
+      \ },
+      \ }
+  call ddc_nvim_lsp_doc#enable()
+'''
+
+ [[plugins]]
+ repo = 'cohama/lexima.vim'
+ on_event= 'InsertEnter'
+ hook_source='''
+call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+ '''
