@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>~/.config/nvim/lua/plugins.lua.html</title>
+<meta name="Generator" content="Vim/8.1">
+<meta name="plugin-version" content="vim9.0_v1">
+<meta name="syntax" content="lua">
+<meta name="settings" content="number_lines,use_css,no_foldcolumn,expand_tabs,line_ids,prevent_copy=,use_input_for_pc=fallback">
+<meta name="colorscheme" content="nightfox">
+<style>
+<!--
+pre { font-family: monospace; color: #cdcecf; background-color: #000000; }
+body { font-family: monospace; color: #cdcecf; background-color: #000000; }
+* { font-size: 1em; }
+.Operator { color: #aeafb0; }
+.Function { color: #86abdc; }
+.Type { color: #dbc074; }
+.Number { color: #f4a261; }
+.LineNr { color: #71839b; }
+.Identifier { color: #63cdcf; }
+.String { color: #81b29a; }
+.Constant { color: #f6b079; }
+.Comment { color: #738091; }
+.Statement { color: #9d79d6; }
+-->
+</style>
+
+<script>
+<!--
+
+/* function to open any folds containing a jumped-to line before jumping to it */
+function JumpToLine()
+{
+  var lineNum;
+  lineNum = window.location.hash;
+  lineNum = lineNum.substr(1); /* strip off '#' */
+
+  if (lineNum.indexOf('L') == -1) {
+    lineNum = 'L'+lineNum;
+  }
+  var lineElem = document.getElementById(lineNum);
+  /* Always jump to new location even if the line was hidden inside a fold, or
+   * we corrected the raw number to a line ID.
+   */
+  if (lineElem) {
+    lineElem.scrollIntoView(true);
+  }
+  return true;
+}
+if ('onhashchange' in window) {
+  window.onhashchange = JumpToLine;
+}
+
+-->
+</script>
+</head>
+<body onload='JumpToLine();'>
+<pre id='vimCodeElement'>
+<span id="L1" class="LineNr"> 1 </span><span class="Statement">return</span> <span class="Type">{</span>
+<span id="L2" class="LineNr"> 2 </span>  <span class="Comment">-- the colorscheme should be available when starting Neovim</span>
+<span id="L3" class="LineNr"> 3 </span><span class="Comment">--  {</span>
+<span id="L4" class="LineNr"> 4 </span><span class="Comment">--    &quot;folke/tokyonight.nvim&quot;,</span>
+<span id="L5" class="LineNr"> 5 </span><span class="Comment">--    lazy = false, -- make sure we load this during startup if it is your main colorscheme</span>
+<span id="L6" class="LineNr"> 6 </span><span class="Comment">--    priority = 1000, -- make sure to load this before all the other start plugins</span>
+<span id="L7" class="LineNr"> 7 </span><span class="Comment">--    config = function()</span>
+<span id="L8" class="LineNr"> 8 </span><span class="Comment">--      -- load the colorscheme here</span>
+<span id="L9" class="LineNr"> 9 </span><span class="Comment">--      vim.cmd([[colorscheme tokyonight]])</span>
+<span id="L10" class="LineNr">10 </span><span class="Comment">--    end,</span>
+<span id="L11" class="LineNr">11 </span><span class="Comment">--  },</span>
+<span id="L12" class="LineNr">12 </span>
+<span id="L13" class="LineNr">13 </span>  <span class="Comment">-- I have a separate config.mappings file where I require which-key.</span>
+<span id="L14" class="LineNr">14 </span>  <span class="Comment">-- With lazy the plugin will be automatically loaded when it is required somewhere</span>
+<span id="L15" class="LineNr">15 </span>  <span class="Type">{</span> <span class="String">&quot;</span><span class="String">folke/which-key.nvim</span><span class="String">&quot;</span>, lazy <span class="Operator">=</span> <span class="Constant">true</span> <span class="Type">}</span>,
+<span id="L16" class="LineNr">16 </span>
+<span id="L17" class="LineNr">17 </span>  <span class="Type">{</span>
+<span id="L18" class="LineNr">18 </span>    <span class="String">&quot;</span><span class="String">nvim-neorg/neorg</span><span class="String">&quot;</span>,
+<span id="L19" class="LineNr">19 </span>    <span class="Comment">-- lazy-load on filetype</span>
+<span id="L20" class="LineNr">20 </span>    ft <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">norg</span><span class="String">&quot;</span>,
+<span id="L21" class="LineNr">21 </span>    <span class="Comment">-- options for neorg. This will automatically call `require(&quot;neorg&quot;).setup(opts)`</span>
+<span id="L22" class="LineNr">22 </span>    opts <span class="Operator">=</span> <span class="Type">{</span>
+<span id="L23" class="LineNr">23 </span>      <span class="Identifier">load</span> <span class="Operator">=</span> <span class="Type">{</span>
+<span id="L24" class="LineNr">24 </span>        [<span class="String">&quot;</span><span class="String">core.defaults</span><span class="String">&quot;</span>] <span class="Operator">=</span> <span class="Type">{}</span>,
+<span id="L25" class="LineNr">25 </span>      <span class="Type">}</span>,
+<span id="L26" class="LineNr">26 </span>    <span class="Type">}</span>,
+<span id="L27" class="LineNr">27 </span>  <span class="Type">}</span>,
+<span id="L28" class="LineNr">28 </span>
+<span id="L29" class="LineNr">29 </span>  <span class="Type">{</span>
+<span id="L30" class="LineNr">30 </span>    <span class="String">&quot;</span><span class="String">dstein64/vim-startuptime</span><span class="String">&quot;</span>,
+<span id="L31" class="LineNr">31 </span>    <span class="Comment">-- lazy-load on a command</span>
+<span id="L32" class="LineNr">32 </span>    cmd <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">StartupTime</span><span class="String">&quot;</span>,
+<span id="L33" class="LineNr">33 </span>    <span class="Comment">-- init is called during startup. Configuration for vim plugins typically should be set in an init function</span>
+<span id="L34" class="LineNr">34 </span>    init <span class="Operator">=</span> <span class="Function">function</span>()
+<span id="L35" class="LineNr">35 </span>      vim.g.startuptime_tries <span class="Operator">=</span> <span class="Number">10</span>
+<span id="L36" class="LineNr">36 </span>    <span class="Function">end</span>,
+<span id="L37" class="LineNr">37 </span>  <span class="Type">}</span>,
+<span id="L38" class="LineNr">38 </span>
+<span id="L39" class="LineNr">39 </span>  <span class="Type">{</span>
+<span id="L40" class="LineNr">40 </span>    <span class="String">&quot;</span><span class="String">hrsh7th/nvim-cmp</span><span class="String">&quot;</span>,
+<span id="L41" class="LineNr">41 </span>    <span class="Comment">-- load cmp on InsertEnter</span>
+<span id="L42" class="LineNr">42 </span>    event <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">InsertEnter</span><span class="String">&quot;</span>,
+<span id="L43" class="LineNr">43 </span>    <span class="Comment">-- these dependencies will only be loaded when cmp loads</span>
+<span id="L44" class="LineNr">44 </span>    <span class="Comment">-- dependencies are always lazy-loaded unless specified otherwise</span>
+<span id="L45" class="LineNr">45 </span>    dependencies <span class="Operator">=</span> <span class="Type">{</span>
+<span id="L46" class="LineNr">46 </span>      <span class="String">&quot;</span><span class="String">hrsh7th/cmp-nvim-lsp</span><span class="String">&quot;</span>,
+<span id="L47" class="LineNr">47 </span>      <span class="String">&quot;</span><span class="String">hrsh7th/cmp-buffer</span><span class="String">&quot;</span>,
+<span id="L48" class="LineNr">48 </span>    <span class="Type">}</span>,
+<span id="L49" class="LineNr">49 </span>    config <span class="Operator">=</span> <span class="Function">function</span>()
+<span id="L50" class="LineNr">50 </span>      <span class="Comment">-- ...</span>
+<span id="L51" class="LineNr">51 </span>    <span class="Function">end</span>,
+<span id="L52" class="LineNr">52 </span>  <span class="Type">}</span>,
+<span id="L53" class="LineNr">53 </span>
+<span id="L54" class="LineNr">54 </span>  <span class="Comment">-- if some code requires a module from an unloaded plugin, it will be automatically loaded.</span>
+<span id="L55" class="LineNr">55 </span>  <span class="Comment">-- So for api plugins like devicons, we can always set lazy=true</span>
+<span id="L56" class="LineNr">56 </span>  <span class="Type">{</span> <span class="String">&quot;</span><span class="String">nvim-tree/nvim-web-devicons</span><span class="String">&quot;</span>, lazy <span class="Operator">=</span> <span class="Constant">true</span> <span class="Type">}</span>,
+<span id="L57" class="LineNr">57 </span>
+<span id="L58" class="LineNr">58 </span>  <span class="Comment">-- you can use the VeryLazy event for things that can</span>
+<span id="L59" class="LineNr">59 </span>  <span class="Comment">-- load later and are not important for the initial UI</span>
+<span id="L60" class="LineNr">60 </span>  <span class="Type">{</span> <span class="String">&quot;</span><span class="String">stevearc/dressing.nvim</span><span class="String">&quot;</span>, event <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">VeryLazy</span><span class="String">&quot;</span> <span class="Type">}</span>,
+<span id="L61" class="LineNr">61 </span>
+<span id="L62" class="LineNr">62 </span>  <span class="Type">{</span>
+<span id="L63" class="LineNr">63 </span>    <span class="String">&quot;</span><span class="String">Wansmer/treesj</span><span class="String">&quot;</span>,
+<span id="L64" class="LineNr">64 </span>    keys <span class="Operator">=</span> <span class="Type">{</span>
+<span id="L65" class="LineNr">65 </span>      <span class="Type">{</span> <span class="String">&quot;</span><span class="String">J</span><span class="String">&quot;</span>, <span class="String">&quot;</span><span class="String">&lt;cmd&gt;TSJToggle&lt;cr&gt;</span><span class="String">&quot;</span>, desc <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">Join Toggle</span><span class="String">&quot;</span> <span class="Type">}</span>,
+<span id="L66" class="LineNr">66 </span>    <span class="Type">}</span>,
+<span id="L67" class="LineNr">67 </span>    opts <span class="Operator">=</span> <span class="Type">{</span> use_default_keymaps <span class="Operator">=</span> <span class="Constant">false</span>, max_join_length <span class="Operator">=</span> <span class="Number">150</span> <span class="Type">}</span>,
+<span id="L68" class="LineNr">68 </span>  <span class="Type">}</span>,
+<span id="L69" class="LineNr">69 </span>
+<span id="L70" class="LineNr">70 </span>  <span class="Type">{</span>
+<span id="L71" class="LineNr">71 </span>    <span class="String">&quot;</span><span class="String">monaqa/dial.nvim</span><span class="String">&quot;</span>,
+<span id="L72" class="LineNr">72 </span>    <span class="Comment">-- lazy-load on keys</span>
+<span id="L73" class="LineNr">73 </span>    <span class="Comment">-- mode is `n` by default. For more advanced options, check the section on key mappings</span>
+<span id="L74" class="LineNr">74 </span>    keys <span class="Operator">=</span> <span class="Type">{</span> <span class="String">&quot;</span><span class="String">&lt;C-a&gt;</span><span class="String">&quot;</span>, <span class="Type">{</span> <span class="String">&quot;</span><span class="String">&lt;C-x&gt;</span><span class="String">&quot;</span>, mode <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">n</span><span class="String">&quot;</span> <span class="Type">}</span> <span class="Type">}</span>,
+<span id="L75" class="LineNr">75 </span>  <span class="Type">}</span>,
+<span id="L76" class="LineNr">76 </span>
+<span id="L77" class="LineNr">77 </span>  <span class="Comment">-- local plugins need to be explicitly configured with dir</span>
+<span id="L78" class="LineNr">78 </span>  <span class="Type">{</span> dir <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">~/projects/secret.nvim</span><span class="String">&quot;</span> <span class="Type">}</span>,
+<span id="L79" class="LineNr">79 </span>
+<span id="L80" class="LineNr">80 </span>  <span class="Comment">-- you can use a custom url to fetch a plugin</span>
+<span id="L81" class="LineNr">81 </span>  <span class="Type">{</span> url <span class="Operator">=</span> <span class="String">&quot;</span><span class="String"><a href="https://github.com/folke/noice.nvim.git">https://github.com/folke/noice.nvim.git</a></span><span class="String">&quot;</span> <span class="Type">}</span>,
+<span id="L82" class="LineNr">82 </span>
+<span id="L83" class="LineNr">83 </span>  <span class="Comment">-- local plugins can also be configure with the dev option.</span>
+<span id="L84" class="LineNr">84 </span>  <span class="Comment">-- This will use {config.dev.path}/noice.nvim/ instead of fetching it from Github</span>
+<span id="L85" class="LineNr">85 </span>  <span class="Comment">-- With the dev option, you can easily switch between the local and installed version of a plugin</span>
+<span id="L86" class="LineNr">86 </span>  <span class="Type">{</span> <span class="String">&quot;</span><span class="String">folke/noice.nvim</span><span class="String">&quot;</span>, dev <span class="Operator">=</span> <span class="Constant">true</span> <span class="Type">}</span>,
+<span id="L87" class="LineNr">87 </span><span class="Type">}</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
